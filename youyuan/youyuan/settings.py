@@ -14,6 +14,10 @@ BOT_NAME = 'youyuan'
 SPIDER_MODULES = ['youyuan.spiders']
 NEWSPIDER_MODULE = 'youyuan.spiders'
 
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# 允许中途暂停,Redis数据不丢失
+SCHEDULER_PERSIST = True
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'youyuan (+http://www.yourdomain.com)'
@@ -66,7 +70,11 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'youyuan.pipelines.YouyuanPipeline': 300,
+    'scrapy_redis.pipelines.RedisPipeline': 400,
 }
+
+REDIS_HOST = "192.168.2.104"
+REDIS_PORT = 6379
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
