@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'youyuan.spiders'
 
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-# 允许中途暂停,Redis数据不丢失
+# 允许中途暂停, Redis数据不丢失
 SCHEDULER_PERSIST = True
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
