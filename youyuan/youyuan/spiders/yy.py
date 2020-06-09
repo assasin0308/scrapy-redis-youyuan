@@ -1,15 +1,25 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
+# from scrapy.spiders import CrawlSpider, Rule
+from scrapy.spiders import Rule
+from scrapy_redis.spiders import RedisCrawlSpider
 from youyuan.items import YouyuanItem
 
-class YySpider(CrawlSpider):
+# class YySpider(CrawlSpider):
+class Yyspider(RedisCrawlSpider):
     name = 'yy'
-    allowed_domains = ['youyuan.com']
-    start_urls = [
-        'http://www.youyuan.com/find/beijing/mm0-0/advance-0-0-0-0-0-0-0/p1/'
-    ]
+    # allowed_domains = ['youyuan.com']
+    # start_urls = [
+    #     'http://www.youyuan.com/find/beijing/mm0-0/advance-0-0-0-0-0-0-0/p1/'
+    # ]
+    redis_key = 'yyspider:start_urls'
+    # 动态域的获取
+    def __init__(self,*args,**kwargs):
+        domain = kwargs.pop('domain','')
+        self.allowed_domain = filter(None,domain.split(','))
+        super(Yyspider,self).__init__(*args,**kwargs)
+
     # 匹配规则
     # 第一级,北京市女性每一页链接匹配规则
     page_links = LinkExtractor(allow=(r"youyuan.com/find/beijing/mm0-0/advance-0-0-0-0-0-0-0/p\d+/"))
